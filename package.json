@@ -1,0 +1,22 @@
+{
+  "name": "empora-sample",
+  "version": "1.0.0",
+  "description": "Code sample for Empora Title",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eloisemaun/empora-sample.git"
+  },
+  "author": "Eloise Maun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eloisemaun/empora-sample/issues"
+  },
+  "homepage": "https://github.com/eloisemaun/empora-sample#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}

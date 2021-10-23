@@ -14,13 +14,11 @@ export default function appEntry() {
   //   .on('data', (csvrow) => csvData.push(csvrow))
   //   .on('end', () => console.log(csvData));
   
-
-  AddressValidator.validate();
-
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', (data) => {
-    console.log(FileParser.parse(data));
+    const addresses = FileParser.parse(data);
+    addresses.forEach((a) => AddressValidator.validate(a));
   });
 }
 

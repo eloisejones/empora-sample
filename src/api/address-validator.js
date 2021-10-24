@@ -1,33 +1,20 @@
+import https from 'https';
 import environment from '../config/index.js';
+import AddressValidatorParams from '../models/address-validator-params.js';
 
-export const ADDRESS_FIELDS = {
-  street: "street",
-  city: "city",
-  postalCode: "postalCode",
-};
+export function getValidatedAddress(address, processResponse) {
+  const requestUrl = buildAddressValidatorUrl(address);
 
-export default class AddressValidator {
-  static API_FIELDS = {
-    street: "StreetAddress",
-    city: "City",
-    postalCode: "PostalCode",
-    apiKey: "APIKey",
-  }
+  https.get(requestUrl, (resp) => {
+    let data = '';
+    resp.on('data', (chunk) => data += chunk);
+    resp.on('end', () => processResponse(address, JSON.parse(data)));
 
-  static validate(address) {
-    if (environment.addressValidator.realApiEnabled) {
-      console.log("Real API Enabled");
-      return;
-    }
+  }).on("error", (err) => console.log("Error: " + err.message));
+}
 
-    AddressValidator.fakeApi(address);
-  }
-
-  static fakeApi(address) {
-    console.log(address);
-  }
-
-  static buildUrlParams(address) {
-
-  }
+export function buildAddressValidatorUrl(address) {
+  const validatorUrl = new URL(environment.addressValidator.endpoint);
+  validatorUrl.search = AddressValidatorParams.buildParamsFromAddress(address);
+  return validatorUrl;
 }

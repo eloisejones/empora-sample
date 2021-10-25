@@ -1,4 +1,4 @@
-import Address from '../../src/models/address';
+import Address from '../../src/models/address.js';
 
 const cases = {
   basicAllData: {},
@@ -47,7 +47,7 @@ describe('Address', () => {
     });
   });
 
-  describe('keys_array', () => {
+  describe('KEYS_ARRAY', () => {
     it('contains all keys in KEYS', () => {
       Object.keys(Address.KEYS).forEach((k) => {
         expect(Address.KEYS_ARRAY).toContain(k);
@@ -59,6 +59,5 @@ describe('Address', () => {
         expect(Address.KEYS).toHaveProperty(k);
       });
     });
-
   });
 });

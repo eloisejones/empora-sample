@@ -1,10 +1,12 @@
 export default class Address {
   constructor(data) {
-    Object.keys(Address.KEYS).forEach(k => this[k] = data[k]);
+    Address.KEYS_ARRAY.forEach((k) => this[k] = data[k]);
   }
 
+  static FIELD_DELIMITER = ', ';
+
   toString() {
-    const s = ', ';
+    const s = Address.FIELD_DELIMITER;
     return this.street + s + this.city + s + this.postalCode;
   }
 
@@ -15,10 +17,4 @@ export default class Address {
   };
 
   static KEYS_ARRAY = Object.keys(Address.KEYS);
-
 }
-
-// Address.prototype.toString = () => {
-//   const s = ', ';
-//   return this.street + s + this.city + s + this.postalCode;
-// }

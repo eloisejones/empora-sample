@@ -2,6 +2,7 @@
 
 import AddressValidator from './services/address-validator.js';
 import AddressesFileParser from './services/addresses-file-parser.js';
+import url from 'url'
 
 export default function appEntry() {
   process.stdin.resume();
@@ -12,4 +13,7 @@ export default function appEntry() {
   });
 }
 
-appEntry();
+var runningAsScript = import.meta.url === url.pathToFileURL(process.argv[1]).href;
+if (runningAsScript) {
+  appEntry();
+}

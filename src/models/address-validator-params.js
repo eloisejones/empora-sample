@@ -35,6 +35,10 @@ export default class AddressValidatorParams {
   }
 
   static buildParamsFromAddress(address) {
+    if (!(address instanceof Address)) {
+      throw 'Parameter \'address\' must be of type Address';
+    }
+
     const urlSearchParams = new URLSearchParams();
     urlSearchParams.set(AddressValidatorParams.KEYS_REQ.apiKey, environment.addressValidator.apiKey);
     urlSearchParams.set(AddressValidatorParams.KEYS_REQ.countryCode, 'us');
@@ -49,5 +53,3 @@ export default class AddressValidatorParams {
     return new Address(addressParams);
   }
 }
-
-//curl https://api.address-validator.net/api/verify?APIKey=av-02cd7b26ba12f90948ce6bafc39549bd&StreetAddress=658%20s%20grant%20ave&City=columbus&PostalCode=43206&CountryCode=us

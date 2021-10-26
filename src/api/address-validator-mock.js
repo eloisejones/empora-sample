@@ -20,21 +20,20 @@ const TESTS = [
   },
 ];
 
-export function getValidatedAddressMock(address, processResponse) {
-  // const requestUrl = buildAddressValidatorUrl(address);
-  // const requestAddress = AddressValidatorParams.buildAddressFromUrl(requestUrl);
+export async function getValidatedAddressMock(address, processResponse) {
+  return new Promise((resolve, reject) => {
+    const response = {};
+    TESTS.find((test) => {
+      if (test.regex.test(address.street)) {
+        response.status = test.status;
+        Address.KEYS_ARRAY.forEach((addressKey) => {
+          const respKey = AddressValidatorParams.KEYS_RESP[addressKey];
+          response[respKey] = test.addressTransformFn(address[addressKey]);
+        })
+        return true;
+      }
+    });
 
-  const response = {};
-  TESTS.find((test) => {
-    if (test.regex.test(address.street)) {
-      response.status = test.status;
-      Address.KEYS_ARRAY.forEach((addressKey) => {
-        const respKey = AddressValidatorParams.KEYS_RESP[addressKey];
-        response[respKey] = test.addressTransformFn(address[addressKey]);
-      })
-      return true;
-    }
-  })
-  
-  processResponse(address, response);
+    resolve(response);
+  });
 }

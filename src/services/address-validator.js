@@ -4,16 +4,17 @@ import { getValidatedAddress } from '../api/address-validator.js';
 import { getValidatedAddressMock } from '../api/address-validator-mock.js';
 
 export default class AddressValidator {
-  static validate(address) {
+  static async validate(address) {
     const handler = environment.addressValidator.realApiEnabled
                   ? getValidatedAddress
                   : getValidatedAddressMock;
-    handler(address, AddressValidator.processResponse);
+    const response = await handler(address);
+    
+    return AddressValidator.processResponse(response);
   }
 
-  static processResponse(origAddress, response) {
-    const formattedAddressStr = AddressValidator.getFormattedAddressStrFromResponse(response);
-    console.log(origAddress.toString() + ' -> ' + formattedAddressStr);
+  static processResponse(response) {
+    return AddressValidator.getFormattedAddressStrFromResponse(response);
   }
 
   static getFormattedAddressStrFromResponse(response) {

@@ -9,7 +9,12 @@ export default function appEntry() {
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', (data) => {
     const addresses = AddressesFileParser.parse(data);
-    addresses.forEach((a) => AddressValidator.validate(a));
+    addresses.forEach((a) => {
+      AddressValidator.validate(a)
+        .then((formattedAddressStr) => {
+          console.log(a.toString() + ' -> ' + formattedAddressStr);
+        });
+    });
   });
 }
 

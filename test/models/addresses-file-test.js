@@ -2,7 +2,7 @@ import AddressesFile from '../../src/models/addresses-file.js';
 import Address from '../../src/models/address.js';
 
 describe(('AddressFile'), () => {
-  describe('FIELD_ORDER', () => {
+  describe('.FIELD_ORDER', () => {
     it('contains only keys that exist in KEYS', () => {
       AddressesFile.FIELD_ORDER.forEach((k) => {
         expect(Address.KEYS).toHaveProperty(k);
@@ -10,7 +10,7 @@ describe(('AddressFile'), () => {
     });
   });
 
-  describe('buildAddressFromFileLine', () => {
+  describe('.buildAddressFromFileLine', () => {
     it('handles a basic case with all data', () => {
       const line = '123 My Street, Appledale, 12345';
       const result = AddressesFile.buildAddressFromFileLine(line);
@@ -68,7 +68,7 @@ describe(('AddressFile'), () => {
     });
   });
 
-  describe('isLineValid', () => {
+  describe('.isLineValid', () => {
     it('returns true for a basic case with all data', () => {
       const line = '123 My Street, Appledale, 12345';
       const result = AddressesFile.isLineValid(line);

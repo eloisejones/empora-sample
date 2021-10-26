@@ -29,7 +29,7 @@ describe('Address', () => {
     });
   });
 
-  describe('toString', () => {
+  describe('.toString', () => {
     it('handles a basic case with all data', () => {
       const data = cases.basicAllData;
       const address = new Address(data);
@@ -47,7 +47,7 @@ describe('Address', () => {
     });
   });
 
-  describe('KEYS_ARRAY', () => {
+  describe('.KEYS_ARRAY', () => {
     it('contains all keys in KEYS', () => {
       Object.keys(Address.KEYS).forEach((k) => {
         expect(Address.KEYS_ARRAY).toContain(k);

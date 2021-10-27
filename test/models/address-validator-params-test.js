@@ -42,7 +42,7 @@ const cases = {
 Address.KEYS_ARRAY.forEach((f) => cases.basicAllData[f] = `any data ${f}`);
 
 describe('AddressValidatorParams', () => {
-  describe.only('.buildAddressFromUrl', () => {
+  describe('.buildAddressFromUrl', () => {
     it('handles a basic case with all data', () => {
       const address = new Address(cases.basicAllData);
       const requestUrl = buildAddressValidatorUrl(address);

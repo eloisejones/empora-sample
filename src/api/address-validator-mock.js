@@ -1,6 +1,5 @@
 import AddressValidatorParams from "../models/address-validator-params.js";
 import Address from "../models/address.js";
-import { buildAddressValidatorUrl } from './address-validator.js';
 
 const TESTS = [
   {
@@ -20,7 +19,7 @@ const TESTS = [
   },
 ];
 
-export async function getValidatedAddressMock(address, processResponse) {
+export async function getValidatedAddressMock(address) {
   return new Promise((resolve, reject) => {
     const response = {};
     TESTS.find((test) => {

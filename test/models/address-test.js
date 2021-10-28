@@ -38,12 +38,35 @@ describe('Address', () => {
       expect(address.toString()).toBe(expected);
     });
 
-    it('handles a basic case with all data', () => {
+    it('handles a basic case with no data', () => {
       const data = cases.basicNoData;
       const address = new Address(data);
       const s = Address.FIELD_DELIMITER;
-      const expected = data.street + s + data.city + s + data.postalCode;
+      const expected = '';
       expect(address.toString()).toBe(expected);
+    });
+
+    Address.KEYS_ARRAY.forEach((f) => {
+      it(`handles no ${f}`, () => {
+        const data = {...cases.basicAllData};
+        delete data[f];
+        const address = new Address(data);
+        const fd = Address.FIELD_DELIMITER;
+        let expected;
+        switch(f) {
+          case Address.KEYS.street:
+            expected = data.city + fd + data.postalCode;
+            break;
+          case Address.KEYS.city:
+            expected = data.street + fd + data.postalCode;
+            break;
+          case Address.KEYS.postalCode:
+            expected = data.street + fd + data.city;
+            break;
+          default:
+        };
+        expect(address.toString()).toBe(expected);
+      });
     });
   });
 

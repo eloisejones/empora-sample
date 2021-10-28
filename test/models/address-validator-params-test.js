@@ -4,6 +4,7 @@ import environment from '../../src/config/index.js';
 import { expect, jest } from '@jest/globals';
 import { getValidatedAddressMock } from '../../src/api/address-validator-mock.js';
 import { getValidatedAddress, buildAddressValidatorUrl } from '../../src/api/address-validator.js';
+import { responseAddressValidatorValid } from '../assets/response-address-validator-valid.js';
 
 const cases = {
   basicAllData: {},
@@ -19,24 +20,6 @@ const cases = {
       [Address.KEYS.city]: 'Columbus',
       [Address.KEYS.postalCode]: '43215-5207',
     }
-  },
-  validResponse: {
-    "status": "VALID",
-    "ratelimit_remain": 98,
-    "ratelimit_seconds": 25,
-    "cost": 1.0,
-    "formattedaddress": "1234 S Colorado Ave,Columbus OH 43206-1219",
-    "addressline1": "1234 S Colorado Ave",
-    "addresslinelast": "Columbus OH 43206-1219",
-    "street": "S Colorado Ave",
-    "streetnumber": "1234",
-    "postalcode": "43206-1219",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "US",
-    "county": "Franklin",
-    "rdi": "R",
-    "type": "S",
   },
 };
 Address.KEYS_ARRAY.forEach((f) => cases.basicAllData[f] = `any data ${f}`);
@@ -103,11 +86,11 @@ describe('AddressValidatorParams', () => {
   describe('.buildAddressFromResponse', () => {
     describe('with manually generated response data', () => {
       it('handles a valid response', () => {
-        const result = AddressValidatorParams.buildAddressFromResponse(cases.validResponse);
+        const result = AddressValidatorParams.buildAddressFromResponse(responseAddressValidatorValid);
 
         expect(result instanceof Address).toBe(true);
         Address.KEYS_ARRAY.forEach((f) => {
-          expect(result[f]).toBe(cases.validResponse[AddressValidatorParams.KEYS_RESP[f]]);
+          expect(result[f]).toBe(responseAddressValidatorValid[AddressValidatorParams.KEYS_RESP[f]]);
         });
       });
     });

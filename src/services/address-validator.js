@@ -4,6 +4,8 @@ import { getValidatedAddress } from '../api/address-validator.js';
 import { getValidatedAddressMock } from '../api/address-validator-mock.js';
 
 export default class AddressValidator {
+  static INVALID_ADDRESS_STRING = 'Invalid Address';
+
   static async validate(address) {
     const handler = environment.addressValidator.realApiEnabled
                   ? getValidatedAddress
@@ -19,7 +21,7 @@ export default class AddressValidator {
 
   static getFormattedAddressStrFromResponse(response) {
     if (response.status == AddressValidatorParams.STATUSES.invalid) { 
-      return 'Invalid Address';
+      return AddressValidator.INVALID_ADDRESS_STRING;
     }
 
     const address = AddressValidatorParams.buildAddressFromResponse(response);

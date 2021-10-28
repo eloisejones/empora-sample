@@ -1,0 +1,18 @@
+export const responseAddressValidatorValid = {
+  "status": "VALID",
+  "ratelimit_remain": 98,
+  "ratelimit_seconds": 25,
+  "cost": 1.0,
+  "formattedaddress": "1234 S Colorado Ave,Columbus OH 43206-1219",
+  "addressline1": "1234 S Colorado Ave",
+  "addresslinelast": "Columbus OH 43206-1219",
+  "street": "S Colorado Ave",
+  "streetnumber": "1234",
+  "postalcode": "43206-1219",
+  "city": "Columbus",
+  "state": "OH",
+  "country": "US",
+  "county": "Franklin",
+  "rdi": "R",
+  "type": "S",
+};

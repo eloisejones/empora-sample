@@ -6,8 +6,17 @@ export default class Address {
   static FIELD_DELIMITER = ', ';
 
   toString() {
-    const s = Address.FIELD_DELIMITER;
-    return this.street + s + this.city + s + this.postalCode;
+    const fd = Address.FIELD_DELIMITER;
+    let s = '';
+
+    Address.KEYS_ARRAY.forEach((k) => {
+      if (this[k] && this[k].toLowerCase() !== 'undefined') {
+        if (s) { s += fd; }
+        s += this[k];
+      }
+    })
+    
+    return s;
   }
 
   static KEYS = {

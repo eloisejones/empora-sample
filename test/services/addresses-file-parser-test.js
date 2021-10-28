@@ -1,4 +1,3 @@
-import { expect, it } from '@jest/globals';
 import fs from 'fs';
 import AddressesFileParser from '../../src/services/addresses-file-parser';
 import Address from '../../src/models/address';
@@ -36,9 +35,31 @@ describe('AddressesFileParser', () => {
       });
     });
 
+    it('handles when there is a header but no data', () => {
+      const origFile = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
+      const matches = origFile.match(/^[^\n]+/);
+      const newFile = matches[0];
+      const result = AddressesFileParser.parse(newFile);
+
+      expect(result.length).toBe(0);
+    });
+
     it('errors when the header is not valid', () => {
       const origFile = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
       const newFile = origFile.replace('S', 'NO');
+
+      let error;
+      try {
+        AddressesFileParser.parse(newFile);
+      } catch(e) { error = e; }
+
+
+      expect(error).toBe('File header is not valid. Aborting.');
+    });
+
+    it('errors when the header is absent', () => {
+      const origFile = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
+      const newFile = origFile.replace(/^.*?\n/, '');
 
       let error;
       try {

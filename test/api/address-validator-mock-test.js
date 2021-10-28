@@ -30,10 +30,9 @@ describe('getValidatedAddressMock', () => {
 
   it('handles a valid response', async () => {
     const address = new Address(cases.basicAllData);
-    const response = await getValidatedAddressMock(address);
     const result = await getValidatedAddressMock(address);
 
-    expect(result.status).toBe(AddressValidatorParams.STATUSES.valid);
+    expect(result[AddressValidatorParams.KEYS_RESP.status]).toBe(AddressValidatorParams.STATUSES.valid);
     Address.KEYS_ARRAY.forEach((f) => {
       expect(result[AddressValidatorParams.KEYS_RESP[f]]).toBe(address[f].toUpperCase());
     });
@@ -45,7 +44,7 @@ describe('getValidatedAddressMock', () => {
 
     const result = await getValidatedAddressMock(address);
 
-    expect(result.status).toBe(AddressValidatorParams.STATUSES.invalid);
+    expect(result[AddressValidatorParams.KEYS_RESP.status]).toBe(AddressValidatorParams.STATUSES.invalid);
     Address.KEYS_ARRAY.forEach((f) => {
       expect(result[AddressValidatorParams.KEYS_RESP[f]]).toBe(address[f]);
     });
@@ -57,7 +56,7 @@ describe('getValidatedAddressMock', () => {
 
     const result = await getValidatedAddressMock(address);
 
-    expect(result.status).toBe(AddressValidatorParams.STATUSES.suspect);
+    expect(result[AddressValidatorParams.KEYS_RESP.status]).toBe(AddressValidatorParams.STATUSES.suspect);
     Address.KEYS_ARRAY.forEach((f) => {
       expect(result[AddressValidatorParams.KEYS_RESP[f]]).toBe(address[f].toUpperCase());
     });

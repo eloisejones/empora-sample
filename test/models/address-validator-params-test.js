@@ -81,7 +81,7 @@ describe('AddressValidatorParams', () => {
       });
     });
 
-    describe('with responses from AddressValidator API', () => {
+    describe('with responses from AddressValidatorService API', () => {
       it('handles a valid response', async () => {
         const outputData = outputCases[AddressValidatorParams.STATUSES.valid];
         const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);

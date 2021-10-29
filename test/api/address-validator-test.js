@@ -4,7 +4,7 @@ import environment from '../../src/config/index.js';
 import { getValidatedAddress, buildAddressValidatorUrl } from '../../src/api/address-validator.js';
 import { inputCases, outputCases } from '../assets/address-validator-api-real-io';
 
-describe('AddressValidator API', () => {
+describe('AddressValidatorService API', () => {
   describe('.getValidatedAddress', () => {
     Object.keys(AddressValidatorParams.STATUSES).forEach((statusK) => {
       const status = AddressValidatorParams.STATUSES[statusK];

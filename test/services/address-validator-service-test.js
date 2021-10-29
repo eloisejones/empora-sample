@@ -1,16 +1,16 @@
 import environment from '../../src/config/index.js';
 import Address from '../../src/models/address';
-import AddressValidator from '../../src/services/address-validator.js';
+import AddressValidatorService from '../../src/services/address-validator.js';
 import AddressValidatorParams from '../../src/models/address-validator-params';
 import { getValidatedAddress } from '../../src/api/address-validator.js';
 import { getValidatedAddressMock } from '../../src/api/address-validator-mock.js';
 import { inputCases, outputCases } from '../assets/address-validator-api-real-io.js';
 
 const rejectFn = (result) => {
-  console.error('AddressValidator unexpectedly errored: '+result);
+  console.error('AddressValidatorService unexpectedly errored: '+result);
 };
 
-describe('AddressValidator', () => {
+describe('AddressValidatorService', () => {
   const origRealApiEnabled = environment.addressValidator.realApiEnabled;
 
   afterEach(() => {
@@ -18,7 +18,7 @@ describe('AddressValidator', () => {
   });
 
   describe('.validate', () => {
-    describe('with responses from AddressValidator API', () => {
+    describe('with responses from AddressValidatorService API', () => {
       it('handles a basic case with all data', () => {
         environment.addressValidator.realApiEnabled = true;
         const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
@@ -26,7 +26,7 @@ describe('AddressValidator', () => {
           expect(result).toBe('10079 Whipple Tree Ln, Clarkston, 48348-2055');
         };
 
-        return AddressValidator.validate(address)
+        return AddressValidatorService.validate(address)
           .then(resolveFn)
           .catch(rejectFn);
       });
@@ -40,7 +40,7 @@ describe('AddressValidator', () => {
           expect(result).toBe(address.toString().toUpperCase());
         };
 
-        return AddressValidator.validate(address)
+        return AddressValidatorService.validate(address)
           .then(resolveFn)
           .catch(rejectFn);
       });
@@ -52,7 +52,7 @@ describe('AddressValidator', () => {
           expect(result).toBe(address.toString().toUpperCase());
         };
 
-        return AddressValidator.validate(address)
+        return AddressValidatorService.validate(address)
           .then(resolveFn)
           .catch(rejectFn);
       });
@@ -66,26 +66,26 @@ describe('AddressValidator', () => {
   describe('.getFormattedAddressStrFromResponse', () => {
     describe('with asset response data', () => {
       it('handles a valid response', () => {
-        const result = AddressValidator.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.valid]);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.valid]);
         expect(result).toBe('10079 Whipple Tree Ln, Clarkston, 48348-2055');
       });
 
       it('handles a suspect response', () => {
-        const result = AddressValidator.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.suspect]);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.suspect]);
         expect(result).toBe('123 E Main St, Columbus, 43215-5207');
       });
 
       it('handles an invalid response', () => {
-        const result = AddressValidator.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.invalid]);
-        expect(result).toBe(AddressValidator.INVALID_ADDRESS_STRING);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(outputCases[AddressValidatorParams.STATUSES.invalid]);
+        expect(result).toBe(AddressValidatorService.INVALID_ADDRESS_STRING);
       });
     });
 
-    describe('with responses from AddressValidator API', () => {
+    describe('with responses from AddressValidatorService API', () => {
       it('handles a valid response', async () => {
         const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         const response = await getValidatedAddress(address);
-        const result = AddressValidator.getFormattedAddressStrFromResponse(response);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(response);
 
         expect(result).toBe('10079 Whipple Tree Ln, Clarkston, 48348-2055');
       });
@@ -95,7 +95,7 @@ describe('AddressValidator', () => {
       it('handles a valid response', async () => {
         const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         const response = await getValidatedAddressMock(address);
-        const result = AddressValidator.getFormattedAddressStrFromResponse(response);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(response);
 
         expect(result).toBe(address.toString().toUpperCase());
       });
@@ -105,9 +105,9 @@ describe('AddressValidator', () => {
         address[Address.KEYS.street] = 'this is INVALID';
 
         const response = await getValidatedAddressMock(address);
-        const result = AddressValidator.getFormattedAddressStrFromResponse(response);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(response);
 
-        expect(result).toBe(AddressValidator.INVALID_ADDRESS_STRING);
+        expect(result).toBe(AddressValidatorService.INVALID_ADDRESS_STRING);
       });
 
       it('handles a suspect response', async () => {
@@ -115,7 +115,7 @@ describe('AddressValidator', () => {
         address[Address.KEYS.street] = 'this is SUSPECT';
 
         const response = await getValidatedAddressMock(address);
-        const result = AddressValidator.getFormattedAddressStrFromResponse(response);
+        const result = AddressValidatorService.getFormattedAddressStrFromResponse(response);
 
         expect(result).toBe(address.toString().toUpperCase());
       });

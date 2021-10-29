@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-import AddressValidator from './services/address-validator.js';
+import AddressValidatorService from './services/address-validator.js';
 import AddressesFileParser from './services/addresses-file-parser.js';
 import url from 'url'
 
@@ -31,7 +31,7 @@ export default class AppEntry {
       try {
         const finalOutput = [];
         for (const i in addresses) {
-          const formattedAddressStr = await AddressValidator.validate(addresses[i]);
+          const formattedAddressStr = await AddressValidatorService.validate(addresses[i]);
           finalOutput.push(addresses[i].toString() + ' -> ' + formattedAddressStr);
         }
         resolve(finalOutput.join('\n'));

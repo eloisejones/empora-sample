@@ -1,7 +1,7 @@
-import environment from '../../src/config/index.js';
 import Address from '../../src/models/address';
-import AddressValidatorService from '../../src/services/address-validator.js';
 import AddressValidatorParams from '../../src/models/address-validator-params';
+import AddressValidatorService from '../../src/services/address-validator.js';
+import environment from '../../src/config/index.js';
 import { getValidatedAddress } from '../../src/api/address-validator.js';
 import { getValidatedAddressMock } from '../../src/api/address-validator-mock.js';
 import { inputCases, outputCases } from '../assets/address-validator-api-real-io.js';

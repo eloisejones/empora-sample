@@ -1,5 +1,5 @@
-import fs from 'fs';
 import environment from '../src/config/index.js';
+import fs from 'fs';
 import { exec } from 'child_process';
 
 process.env.ADDRESS_VALIDATOR_REAL_API_ENABLED = "true";

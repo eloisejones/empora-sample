@@ -1,6 +1,6 @@
-import environment from '../config/index.js';
-import Address from './address.js';
 
+import Address from './address.js';
+import environment from '../config/index.js';
 export default class AddressValidatorParams {
   static KEYS_REQ = {
     [Address.KEYS.street]: "StreetAddress",

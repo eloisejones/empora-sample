@@ -1,5 +1,5 @@
-import AddressesFile from '../../src/models/addresses-file.js';
 import Address from '../../src/models/address.js';
+import AddressesFile from '../../src/models/addresses-file.js';
 
 describe(('AddressFile'), () => {
   describe('.FIELD_ORDER', () => {

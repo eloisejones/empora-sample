@@ -1,5 +1,5 @@
 import Address from '../../src/models/address';
-import AddressValidatorParams from "../../src/models/address-validator-params.js";
+import AddressValidatorParams from '../../src/models/address-validator-params.js';
 import { getValidatedAddress } from '../../src/api/address-validator.js';
 import { getValidatedAddressMock } from '../../src/api/address-validator-mock.js';
 import { inputCases } from '../assets/address-validator-api-real-io';

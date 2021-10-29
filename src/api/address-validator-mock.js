@@ -1,5 +1,5 @@
-import AddressValidatorParams from "../models/address-validator-params.js";
-import Address from "../models/address.js";
+import Address from '../models/address.js';
+import AddressValidatorParams from '../models/address-validator-params.js';
 
 const TESTS = [
   {

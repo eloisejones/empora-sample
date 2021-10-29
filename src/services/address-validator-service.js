@@ -1,5 +1,5 @@
-import environment from '../config/index.js';
 import AddressValidatorParams from '../models/address-validator-params.js';
+import environment from '../config/index.js';
 import { getValidatedAddress } from '../api/address-validator.js';
 import { getValidatedAddressMock } from '../api/address-validator-mock.js';
 

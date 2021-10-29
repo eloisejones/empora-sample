@@ -1,6 +1,6 @@
-import fs from 'fs';
-import AddressesFileParserService from '../../src/services/addresses-file-parser-service.js';
 import Address from '../../src/models/address.js';
+import AddressesFileParserService from '../../src/services/addresses-file-parser-service.js';
+import fs from 'fs';
 
 const example2Results = [
   {

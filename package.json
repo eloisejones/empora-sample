@@ -5,8 +5,8 @@
   "main": "src/app-entry.js",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config src/app-entry.js dotenv_config_path=.env.prod",
-    "start-dev": "node -r dotenv/config src/app-entry.js dotenv_config_path=.env.dev",
+    "start": "node --unhandled-rejections=strict -r dotenv/config src/app-entry.js dotenv_config_path=.env.prod",
+    "start-dev": "node --unhandled-rejections=strict -r dotenv/config src/app-entry.js dotenv_config_path=.env.dev",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "repository": {

@@ -29,10 +29,11 @@ const handleErrors = (done, error, stderr) => {
   }
 };
 
-// Run-time environment cannot be affected by changes at this level. Change the .env file
-// directly to change which API communicator strategy to use.
+// The best way to run this functionality turned out to be using `exec` to 
+// run it the way it expected to be run. These tests are integration tests
+// more than unit tests, but test all methods within AppEntry.
 
-describe('appEntry', () => {
+describe('AppEntry', () => {
   describe('using real API strategy', () => {
     const command = 'start';
     describe('example data provided in instructions', () => {

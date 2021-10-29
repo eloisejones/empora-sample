@@ -18,6 +18,16 @@ const example2Results = [
     [Address.KEYS.city]: 'columbus',
     [Address.KEYS.postalCode]: '43215',
   },
+  {
+    [Address.KEYS.street]: 'definitely',
+    [Address.KEYS.city]: 'not an',
+    [Address.KEYS.postalCode]: 'Address',
+  },
+  {
+    [Address.KEYS.street]: '10079 whipple tree lane',
+    [Address.KEYS.city]: 'clarkston',
+    [Address.KEYS.postalCode]: '48348',
+  },
 ];
 
 describe('AddressesFileParser', () => {
@@ -26,7 +36,7 @@ describe('AddressesFileParser', () => {
       const file = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
       const result = AddressesFileParser.parse(file);
 
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(example2Results.length);
       result.forEach((a, i) => {
         expect(a instanceof Address).toBe(true);
         Address.KEYS_ARRAY.forEach((f) => {

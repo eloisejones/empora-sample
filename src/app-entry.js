@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
-import AddressValidatorService from './services/address-validator.js';
-import AddressesFileParser from './services/addresses-file-parser.js';
+import AddressValidatorService from './services/address-validator-service.js';
+import AddressesFileParserService from './services/addresses-file-parser-service.js';
 import url from 'url'
 
 export default class AppEntry {
@@ -20,7 +20,7 @@ export default class AppEntry {
   }
 
   static async processData(data) {
-    const addresses = AddressesFileParser.parse(data);
+    const addresses = AddressesFileParserService.parse(data);
     const finalOutput = await AppEntry.validateAddresses(addresses);
   
     console.log(finalOutput);

@@ -1,6 +1,6 @@
 import AddressesFile from '../models/addresses-file.js';
 
-export default class AddressesFileParser {
+export default class AddressesFileParserService {
   static parse(file) {
     const lines = file.split('\n');
 

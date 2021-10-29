@@ -1,5 +1,5 @@
 import fs from 'fs';
-import AddressesFileParser from '../../src/services/addresses-file-parser';
+import AddressesFileParserService from '../../src/services/addresses-file-parser-service';
 import Address from '../../src/models/address';
 
 const example2Results = [
@@ -30,11 +30,11 @@ const example2Results = [
   },
 ];
 
-describe('AddressesFileParser', () => {
+describe('AddressesFileParserService', () => {
   describe('.parse', () => {
     it('handles a basic case with all valid data', () => {
       const file = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
-      const result = AddressesFileParser.parse(file);
+      const result = AddressesFileParserService.parse(file);
 
       expect(result.length).toBe(example2Results.length);
       result.forEach((a, i) => {
@@ -49,7 +49,7 @@ describe('AddressesFileParser', () => {
       const origFile = fs.readFileSync('./test/assets/example2-data.csv', 'utf8');
       const matches = origFile.match(/^[^\n]+/);
       const newFile = matches[0];
-      const result = AddressesFileParser.parse(newFile);
+      const result = AddressesFileParserService.parse(newFile);
 
       expect(result.length).toBe(0);
     });
@@ -60,7 +60,7 @@ describe('AddressesFileParser', () => {
 
       let error;
       try {
-        AddressesFileParser.parse(newFile);
+        AddressesFileParserService.parse(newFile);
       } catch(e) { error = e; }
 
 
@@ -73,7 +73,7 @@ describe('AddressesFileParser', () => {
 
       let error;
       try {
-        AddressesFileParser.parse(newFile);
+        AddressesFileParserService.parse(newFile);
       } catch(e) { error = e; }
 
 

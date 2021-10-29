@@ -1,33 +1,14 @@
-import AddressValidatorParams from '../../src/models/address-validator-params.js';
 import Address from '../../src/models/address.js';
+import AddressValidatorParams from '../../src/models/address-validator-params.js';
 import environment from '../../src/config/index.js';
-import { expect, jest } from '@jest/globals';
 import { getValidatedAddressMock } from '../../src/api/address-validator-mock.js';
 import { getValidatedAddress, buildAddressValidatorUrl } from '../../src/api/address-validator.js';
-import { responseAddressValidatorValid } from '../assets/response-address-validator-valid.js';
-
-const cases = {
-  basicAllData: {},
-  basicNoData: {},
-  realAddress: {
-    input: {
-      [Address.KEYS.street]: '123 e Maine Street',
-      [Address.KEYS.city]: 'Columbus',
-      [Address.KEYS.postalCode]: '43215',
-    },
-    output: {
-      [Address.KEYS.street]: '123 E Main St',
-      [Address.KEYS.city]: 'Columbus',
-      [Address.KEYS.postalCode]: '43215-5207',
-    }
-  },
-};
-Address.KEYS_ARRAY.forEach((f) => cases.basicAllData[f] = `any data ${f}`);
+import { inputCases, outputCases } from '../assets/address-validator-api-real-io.js';
 
 describe('AddressValidatorParams', () => {
   describe('.buildAddressFromUrl', () => {
     it('handles a basic case with all data', () => {
-      const address = new Address(cases.basicAllData);
+      const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
       const requestUrl = buildAddressValidatorUrl(address);
       const result = AddressValidatorParams.buildAddressFromUrl(requestUrl);
 
@@ -38,7 +19,7 @@ describe('AddressValidatorParams', () => {
     });
 
     it('handles a basic case with no data', () => {
-      const address = new Address(cases.basicNoData);
+      const address = new Address({});
       const requestUrl = buildAddressValidatorUrl(address);
       const result = AddressValidatorParams.buildAddressFromUrl(requestUrl);
 
@@ -51,19 +32,19 @@ describe('AddressValidatorParams', () => {
 
   describe('.buildParamsFromAddress', () => {
     it('handles a basic case with all data', () => {
-      const address = new Address(cases.basicAllData);
+      const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
       const result = AddressValidatorParams.buildParamsFromAddress(address);
 
       expect(result instanceof URLSearchParams).toBe(true);
       expect(result.get(AddressValidatorParams.KEYS_REQ.apiKey)).toBe(environment.addressValidator.apiKey);
       expect(result.get(AddressValidatorParams.KEYS_REQ.countryCode)).toBe('us');
       Address.KEYS_ARRAY.forEach((f) => {
-        expect(result.get(AddressValidatorParams.KEYS_REQ[f])).toBe(`any data ${f}`);
+        expect(result.get(AddressValidatorParams.KEYS_REQ[f])).toBe(inputCases[AddressValidatorParams.STATUSES.valid][f]);
       });
     });
 
     it('handles a basic case with no data', () => {
-      const address = new Address(cases.basicNoData);
+      const address = new Address({});
       const result = AddressValidatorParams.buildParamsFromAddress(address);
 
       expect(result instanceof URLSearchParams).toBe(true);
@@ -84,33 +65,39 @@ describe('AddressValidatorParams', () => {
   });
 
   describe('.buildAddressFromResponse', () => {
-    describe('with manually generated response data', () => {
-      it('handles a valid response', () => {
-        const result = AddressValidatorParams.buildAddressFromResponse(responseAddressValidatorValid);
+    describe('with asset response data', () => {
+      Object.keys(AddressValidatorParams.STATUSES).forEach((statusK) => {
+        const status = AddressValidatorParams.STATUSES[statusK];
 
-        expect(result instanceof Address).toBe(true);
-        Address.KEYS_ARRAY.forEach((f) => {
-          expect(result[f]).toBe(responseAddressValidatorValid[AddressValidatorParams.KEYS_RESP[f]]);
+        it(`handles a ${status} response`, () => {
+          const response = outputCases[status];
+          const result = AddressValidatorParams.buildAddressFromResponse(response);
+
+          expect(result instanceof Address).toBe(true);
+          Address.KEYS_ARRAY.forEach((f) => {
+            expect(result[f]).toBe(response[AddressValidatorParams.KEYS_RESP[f]]);
+          });
         });
       });
     });
 
     describe('with responses from AddressValidator API', () => {
       it('handles a valid response', async () => {
-        const address = new Address(cases.realAddress.input);
+        const outputData = outputCases[AddressValidatorParams.STATUSES.valid];
+        const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         const response = await getValidatedAddress(address);
         const result = AddressValidatorParams.buildAddressFromResponse(response);
 
         expect(result instanceof Address).toBe(true);
         Address.KEYS_ARRAY.forEach((f) => {
-          expect(result[f]).toBe(cases.realAddress.output[f]);
+          expect(result[f]).toBe(outputData[AddressValidatorParams.KEYS_RESP[f]]);
         });
       });
     });
 
     describe('with responses from AddressValidatorMock API', () => {
       it('handles a valid response', async () => {
-        const address = new Address(cases.basicAllData);
+        const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         const response = await getValidatedAddressMock(address);
         const result = AddressValidatorParams.buildAddressFromResponse(response);
 
@@ -121,7 +108,7 @@ describe('AddressValidatorParams', () => {
       });
 
       it('handles an invalid response', async () => {
-        const address = new Address(cases.basicAllData);
+        const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         address[Address.KEYS.street] = 'this is INVALID';
 
         const response = await getValidatedAddressMock(address);
@@ -134,7 +121,7 @@ describe('AddressValidatorParams', () => {
       });
 
       it('handles a suspect response', async () => {
-        const address = new Address(cases.basicAllData);
+        const address = new Address(inputCases[AddressValidatorParams.STATUSES.valid]);
         address[Address.KEYS.street] = 'this is SUSPECT';
 
         const response = await getValidatedAddressMock(address);

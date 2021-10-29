@@ -1,0 +1,2 @@
+123 e Maine Street, Columbus, 43215 -> 123 E Main St, Columbus, 43215-5207
+1 Empora St, Title, 11111 -> Invalid Address

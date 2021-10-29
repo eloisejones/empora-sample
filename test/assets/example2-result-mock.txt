@@ -1,0 +1,5 @@
+123 e Maine Street, Columbus, 43215 -> 123 E MAINE STREET, COLUMBUS, 43215
+1 Empora St, Title, 11111 -> 1 EMPORA ST, TITLE, 11111
+80 e rich, columbus, 43215 -> 80 E RICH, COLUMBUS, 43215
+definitely, not an, Address -> DEFINITELY, NOT AN, ADDRESS
+10079 whipple tree lane, clarkston, 48348 -> 10079 WHIPPLE TREE LANE, CLARKSTON, 48348

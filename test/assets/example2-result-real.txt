@@ -1,0 +1,5 @@
+123 e Maine Street, Columbus, 43215 -> 123 E Main St, Columbus, 43215-5207
+1 Empora St, Title, 11111 -> Invalid Address
+80 e rich, columbus, 43215 -> 80 E Rich St, Columbus, 43215-5249
+definitely, not an, Address -> Invalid Address
+10079 whipple tree lane, clarkston, 48348 -> 10079 Whipple Tree Ln, Clarkston, 48348-2055

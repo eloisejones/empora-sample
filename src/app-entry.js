@@ -4,21 +4,33 @@ import AddressValidator from './services/address-validator.js';
 import AddressesFileParser from './services/addresses-file-parser.js';
 import url from 'url'
 
-export default function appEntry() {
-  process.stdin.resume();
-  process.stdin.setEncoding('utf8');
-  process.stdin.on('data', (data) => {
-    const addresses = AddressesFileParser.parse(data);
-    addresses.forEach((a) => {
-      AddressValidator.validate(a)
-        .then((formattedAddressStr) => {
-          console.log(a.toString() + ' -> ' + formattedAddressStr);
-        });
+export default async function appEntry() {
+  try {
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', async (data) => {
+      const addresses = AddressesFileParser.parse(data);
+
+      const finalOutput = await getFinalOutput(addresses);
+      console.log(finalOutput);
     });
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function getFinalOutput(addresses) {
+  return new Promise(async (resolve, reject) => {
+    const finalOutput = [];
+    for (const i in addresses) {
+      const formattedAddressStr = await AddressValidator.validate(addresses[i]);
+      finalOutput.push(addresses[i].toString() + ' -> ' + formattedAddressStr);
+    }
+    resolve(finalOutput.join('\n'));
   });
 }
 
-var runningAsScript = import.meta.url === url.pathToFileURL(process.argv[1]).href;
-if (runningAsScript) {
+var isCalledDirectly = url.fileURLToPath(import.meta.url) === process.argv[1];
+if (isCalledDirectly) {
   appEntry();
 }
